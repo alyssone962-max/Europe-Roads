@@ -1,0 +1,38 @@
+-- Função para aplicar reflexos nas superfícies específicas
+local function applyReflections()
+    -- Certifique-se de que o Workspace está definido, caso contrário o script falhará
+    local Workspace = game:GetService("Workspace") 
+
+    for _, object in ipairs(Workspace:GetDescendants()) do
+        if object:IsA("BasePart") then
+
+            -- Reflexo em objetos de vidro
+            if object.Name:match("Glass") then
+                object.Material = Enum.Material.SmoothPlastic
+                object.Reflectance = 0.3 -- Reflexo mais suave para vidro
+            end
+
+            -- Reflexo em superfícies metálicas
+            if object.Name:match("Metal") then
+                object.Material = Enum.Material.Metal
+                object.Reflectance = 0.4 -- Reflexo mais suave para superfícies metálicas
+            end
+
+            -- Alterando as ruas para refletir o céu
+            if object.Name:match("Street") or object.Name:match("Road") then
+                
+                -- Mantém SmoothPlastic para reflexão do céu
+                object.Material = Enum.Material.SmoothPlastic 
+
+                -- *** DIMINUI MUITO MAIS: 0.05 (Quase Sem Reflexo) ***
+                object.Reflectance = 0.05 
+                
+                -- Mantém a cor escura para simular asfalto
+                object.Color = Color3.new(0.15, 0.15, 0.15) 
+            end
+        end
+    end
+end
+
+-- Chama a função para aplicar reflexos nos objetos
+applyReflections()
